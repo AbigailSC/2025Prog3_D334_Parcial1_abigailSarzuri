@@ -24,7 +24,7 @@
     "id": 4,
     "nombre": "Frambuesa",
     "precio": 14000,
-    "ruta_img": "./img/frambuesa.jpg",
+    "ruta_img": "./img/frambuesa.png",
     "estaciones": ["VERANO", "OTONIO"]
   },
   {

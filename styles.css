@@ -6,6 +6,7 @@
 
 :root {
   --background: #e5e5e5;
+  --backgroundActive: #f5f5f5;
   --textPrimary: #121926;
   --basePrimary: #6a994e;
   --baseHover: #386641;
@@ -14,7 +15,7 @@
   --box: #334155;
   background-color: var(--background);
   color: var(--textPrimary);
-  font-family: "Khand", sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 * {
@@ -39,8 +40,98 @@ html {
 
 .header__container{
   display: flex;
-  background-color: var(--basePrimary);
+  background: linear-gradient(135deg, var(--basePrimary) 0%, var(--baseSecundary) 100%);
   justify-content: space-between;
-  padding: 1em 2em;
+  padding: 2em 3em;
   color: var(--background);
+}
+
+.search__container{
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.search__container input {
+  background: white;
+  border-radius: 32px;
+  border: 1px solid transparent;
+  outline: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  color: var(--textPrimary);
+}
+
+.search__container input:focus-within {
+  border: 1px solid var(--baseHover);
+}
+
+/*
+  ===========================================================
+                            Main
+  ===========================================================
+*/
+
+.main__container{
+  display: flex;
+  flex-direction: column;
+  padding: 4em 3em;
+}
+
+.main__header__container{
+  display: flex;
+  margin: 2em 0em;
+  justify-content: space-between;
+}
+
+.main__header__container h3{
+  font-size: 1.5em;
+}
+
+.filter-sort__container{
+  display: flex;
+  gap: 2em;
+}
+
+
+/*
+  ===========================================================
+                      Cards Container
+  ===========================================================
+*/
+
+.results__container{
+  display: flex;
+  gap: 2em;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.result-item {
+  padding: 1em;
+  border: 1px solid var(--box);
+  transition: background 0.2s ease;
+  animation: fadeIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.result-item:hover {
+  background: var(--backgroundActive);
+}
+
+.result-item img {
+  max-width: 240px;
+}
+
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 18px;
 }
