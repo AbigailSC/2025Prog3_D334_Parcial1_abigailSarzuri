@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "nombre": "Anana",
+    "precio": 14000,
+    "ruta_img": "./img/anana.jpg",
+    "estaciones": ["PRIMAVERA", "VERANO"]
+  },
+  {
+    "id": 2,
+    "nombre": "Arandano",
+    "precio": 7000,
+    "ruta_img": "./img/arandano.jpg",
+    "estaciones": ["PRIMAVERA", "VERANO"]
+  },
+  {
+    "id": 3,
+    "nombre": "Banana",
+    "precio": 3600,
+    "ruta_img": "./img/banana.jpg",
+    "estaciones": ["PRIMAVERA", "VERANO", "OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 4,
+    "nombre": "Frambuesa",
+    "precio": 14000,
+    "ruta_img": "./img/frambuesa.jpg",
+    "estaciones": ["VERANO", "OTONIO"]
+  },
+  {
+    "id": 5,
+    "nombre": "Frutilla",
+    "precio": 15500,
+    "ruta_img": "./img/frutilla.jpg",
+    "estaciones": ["PRIMAVERA", "VERANO"]
+  },
+  {
+    "id": 6,
+    "nombre": "Kiwi",
+    "precio": 9900,
+    "ruta_img": "./img/kiwi.jpg",
+    "estaciones": ["OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 7,
+    "nombre": "Mandarina",
+    "precio": 5500,
+    "ruta_img": "./img/mandarina.jpg",
+    "estaciones": ["OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 8,
+    "nombre": "Manzana",
+    "precio": 8700,
+    "ruta_img": "./img/manzana.jpg",
+    "estaciones": ["OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 9,
+    "nombre": "Naranja",
+    "precio": 4500,
+    "ruta_img": "./img/naranja.jpg",
+    "estaciones": ["OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 10,
+    "nombre": "Pera",
+    "precio": 6999,
+    "ruta_img": "./img/pera.jpg",
+    "estaciones": ["OTONIO"]
+  },
+  {
+    "id": 11,
+    "nombre": "Pomelo Amarillo",
+    "precio": 7400,
+    "ruta_img": "./img/pomelo-amarillo.jpg",
+    "estaciones": ["PRIMAVERA", "INVIERNO"]
+  },
+  {
+    "id": 12,
+    "nombre": "Pomelo Rojo",
+    "precio": 8600,
+    "ruta_img": "./img/pomelo-rojo.jpg",
+    "estaciones": ["PRIMAVERA", "OTONIO", "INVIERNO"]
+  },
+  {
+    "id": 13,
+    "nombre": "Sandia",
+    "precio": 6000,
+    "ruta_img": "./img/sandia.jpg",
+    "estaciones": ["VERANO"]
+  }
+]

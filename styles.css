@@ -5,14 +5,11 @@
 */
 
 :root {
-  --background: #192233;
-  --backgroundActive: #25324a;
-  --backgroundBox: #121926;
-  --backgroundBoxGradient: #1b283e;
-  --textPrimary: #ffffff;
-  --textDegradatePrimary: #6f3dcc;
-  --textDegradatePrimeryHover: #854eeb;
-  --textDegradateSecundary: #4786e8;
+  --background: #e5e5e5;
+  --textPrimary: #121926;
+  --basePrimary: #6a994e;
+  --baseHover: #386641;
+  --baseSecundary: #a7c957;
   --textSecondary: #8292a6;
   --box: #334155;
   background-color: var(--background);
@@ -34,3 +31,16 @@ html {
   scroll-behavior: smooth;
 }
 
+/*
+  ===========================================================
+                        Header
+  ===========================================================
+*/
+
+.header__container{
+  display: flex;
+  background-color: var(--basePrimary);
+  justify-content: space-between;
+  padding: 1em 2em;
+  color: var(--background);
+}

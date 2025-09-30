@@ -3,9 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Fruteria</title>
     <script defer src="main.js"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body></body>
+  <body>
+    <!-- Header -->
+    <header class="header__container">
+      <h1>🍉 Fruteria</h1>
+      <nav class="search__container">
+        <h2 id="alumno"></h2>
+        <input type="text" placeholder="Buscar productos..." />
+      </nav>
+    </header>
+
+    <!-- Main -->
+
+    <section class="main__container">
+      <div>
+        <h3>Nuestras Frutas</h3>
+        <div class="filter-sort__container">
+          <div class="filter__list">
+            <label for="category-filter">Filtrar por categoría:</label>
+            <select id="category-filter">
+              <option value="">Todas las estaciones</option>
+              <option value="PRIMAVERA">Primavera</option>
+              <option value="VERANO">Verano</option>
+              <option value="OTONIO">Otonio</option>
+              <option value="INVIERNO">Invierno</option>
+            </select>
+          </div>
+          <div class="sort__list">
+            <label for="products-sort">Ordenar Frutas:</label>
+            <select id="products-sort">
+              <option value="">Ordenar por...</option>
+              <option value="price-asc">Precio: Menor a Mayor</option>
+              <option value="price-desc">Precio: Mayor a Menor</option>
+              <option value="title-asc">Nombre: A-Z</option>
+              <option value="title-desc">Nombre: Z-A</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="result-count"></div>
+      <div class="results__container"></div>
+    </section>
+
+    <!-- Carrito -->
+
+    <button class="cart__bubble">
+      <i class="cart__bubble__icon"> 🛒 </i>
+      <div class="cart__bubble__count">0</div>
+    </button>
+
+    <div class="cart__container">
+      <h3>Tus Productos</h3>
+      <span class="divider__cart"></span>
+      <div class="cart__container__list"></div>
+      <span class="divider__cart"></span>
+      <div class="cart__total__container">
+        <p>Total:</p>
+        <span class="cart-total"></span>
+      </div>
+      <button class="container__btn btn-buy">Comprar</button>
+      <button class="container__btn btn-delete">Limpiar carrito</button>
+    </div>
+  </body>
 </html>
