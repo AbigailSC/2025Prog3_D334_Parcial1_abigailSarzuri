@@ -1,0 +1,35 @@
+/*
+  ===========================================================
+  Normalizacion de estilos y definicion de variables globales
+  ===========================================================
+*/
+
+:root {
+  --background: #192233;
+  --backgroundActive: #25324a;
+  --backgroundBox: #121926;
+  --backgroundBoxGradient: #1b283e;
+  --textPrimary: #ffffff;
+  --textDegradatePrimary: #6f3dcc;
+  --textDegradatePrimeryHover: #854eeb;
+  --textDegradateSecundary: #4786e8;
+  --textSecondary: #8292a6;
+  --box: #334155;
+  background-color: var(--background);
+  color: var(--textPrimary);
+  font-family: "Khand", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style-type: none;
+  color: inherit;
+  /* border:1px solid red; */
+}
+
+html {
+  scroll-behavior: smooth;
+}
