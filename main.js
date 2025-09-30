@@ -10,6 +10,9 @@ const ordenFrutas = document.querySelector("#products-sort")
 const resultadosContenedor = document.querySelector(".results__container")
 const contadorResultados = document.querySelector('.result-count');
 const buscador = document.querySelector("#search-input");
+const botonCarrito = document.querySelector(".cart__bubble");
+const listaCarrito = document.querySelector(".cart__container");
+const contadorProductosCarrito = document.querySelector(".cart__bubble__count")
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
@@ -51,8 +54,8 @@ const renderizarProductos = (resultados, query) => {
             <div class="result-info">
               <img src="${item.ruta_img}" alt="${item.nombre}"/>
               <div class="result-data">
-                <h4 class="result-title">${remarcarTextoEncontrado(item.nombre, query)}</h4>
-                <span>${item.precio}</span>
+                <h3 class="result-title">${remarcarTextoEncontrado(item.nombre, query)}</h3>
+                <p>$${item.precio}</p>
               </div>
             </div>
             <button class="buy-button" data-name="${item.nombre}" data-id=${item.id} data-price="${item.precio}">Agregar al Carrito</button>
@@ -88,10 +91,12 @@ const remarcarTextoEncontrado = (texto, query) => {
   return texto.replace(regex, '<mark style="background: #ffd93d; padding: 1px 2px; border-radius: 3px;">$1</mark>');
 }
 
+const toggleCarrito = () => {
+  listaCarrito.classList.toggle("open-cart-list")
+}
+
 const init = async () => {
   const data = await obtenerDatos()
-  console.log("🚀 ~ init ~ data:", data)
-
   imprimirDatosAlumno()
   renderizarProductos(data, "")
   buscador.addEventListener("keyup", (e) => {
@@ -99,6 +104,7 @@ const init = async () => {
     const resultadosFiltrados = filtrarResultados(data, query);
     renderizarProductos(resultadosFiltrados, query);
   })
+  botonCarrito.addEventListener("click", toggleCarrito);
 }
 
 init();
