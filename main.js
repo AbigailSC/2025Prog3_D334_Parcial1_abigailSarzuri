@@ -265,12 +265,12 @@ const ocultarCarritoScroll = () => {
   ===========================================================
 */
 
-const ordenarProductos = async (data) => {
+const ordenarProductos = (data) => {
   let query = buscador.value;
   let resultadosEncontrados = filtrarResultados(data, query);
-  console.log("🚀 ~ ordenarProductos ~ resultadosEncontrados:", resultadosEncontrados)
-
   let metodoOrdenamiento = ordenFrutas.value;
+  console.log("🚀 ~ ordenarProductos ~ metodoOrdenamiento:", metodoOrdenamiento)
+
   switch (metodoOrdenamiento) {
     case 'price-asc':
       resultadosEncontrados.sort((a, b) => a.precio - b.precio);
@@ -279,15 +279,15 @@ const ordenarProductos = async (data) => {
       resultadosEncontrados.sort((a, b) => b.precio - a.precio);
       break;
     case 'title-asc':
-      resultadosEncontrados.sort((a, b) => a.nombre.localeCompare(b.title));
+      resultadosEncontrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
       break;
     case 'title-desc':
-      resultadosEncontrados.sort((a, b) => b.nombre.localeCompare(a.title));
+      resultadosEncontrados.sort((a, b) => b.nombre.localeCompare(a.nombre));
       break;
     default:
       break;
   }
-  renderizarProductos();
+  renderizarProductos(data, "");
 }
 
 const init = async () => {
