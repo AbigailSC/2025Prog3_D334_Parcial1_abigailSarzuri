@@ -88,7 +88,7 @@ const filtrarResultados = (data, query) => {
   if (!query.trim()) {
     return data;
   }
-
+  query = query.trim()
   let queryNormalizada = normalizarQuery(query);
 
   return data.filter(item => {
@@ -265,6 +265,31 @@ const ocultarCarritoScroll = () => {
   ===========================================================
 */
 
+const ordenarProductos = async (data) => {
+  let query = buscador.value;
+  let resultadosEncontrados = filtrarResultados(data, query);
+  console.log("🚀 ~ ordenarProductos ~ resultadosEncontrados:", resultadosEncontrados)
+
+  let metodoOrdenamiento = ordenFrutas.value;
+  switch (metodoOrdenamiento) {
+    case 'price-asc':
+      resultadosEncontrados.sort((a, b) => a.precio - b.precio);
+      break;
+    case 'price-desc':
+      resultadosEncontrados.sort((a, b) => b.precio - a.precio);
+      break;
+    case 'title-asc':
+      resultadosEncontrados.sort((a, b) => a.nombre.localeCompare(b.title));
+      break;
+    case 'title-desc':
+      resultadosEncontrados.sort((a, b) => b.nombre.localeCompare(a.title));
+      break;
+    default:
+      break;
+  }
+  renderizarProductos();
+}
+
 const init = async () => {
   const data = await obtenerDatos();
 
@@ -277,7 +302,10 @@ const init = async () => {
   resultadosContenedor.addEventListener("click", agregarProductoCarrito)
   window.addEventListener("scroll", ocultarCarritoScroll);
   vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
-  listaProductosCarrito.addEventListener("click", actualizarCantidad)
+  listaProductosCarrito.addEventListener("click", actualizarCantidad);
+  ordenFrutas.addEventListener("change", (e) => {
+    ordenarProductos(data)
+  });
   imprimirDatosAlumno();
   renderizarProductos(data, "");
   actualizarCantProductos();
