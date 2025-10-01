@@ -1,3 +1,9 @@
+/*
+  ===========================================================
+                  Declaracion Variables
+  ===========================================================
+*/
+
 const alumno = {
   "dni": 41756095,
   "nombre": "Abigail",
@@ -13,6 +19,7 @@ const buscador = document.querySelector("#search-input");
 const botonCarrito = document.querySelector(".cart__bubble");
 const listaCarrito = document.querySelector(".cart__container");
 const contadorProductosCarrito = document.querySelector(".cart__bubble__count")
+const listaProductosCarrito = document.querySelector(".cart__container__list");
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
@@ -32,6 +39,12 @@ const obtenerDatos = async () => {
     console.error(error.message);
   }
 }
+
+/*
+  ===========================================================
+                  Renderizar Productos
+  ===========================================================
+*/
 
 const renderizarProductos = (resultados, query) => {
   let cantidad = resultados.length;
@@ -63,6 +76,12 @@ const renderizarProductos = (resultados, query) => {
     `).join('');
 }
 
+/*
+  ===========================================================
+                  Busqeuda Productos
+  ===========================================================
+*/
+
 const filtrarResultados = (data, query) => {
   if (!query.trim()) {
     return data;
@@ -91,20 +110,98 @@ const remarcarTextoEncontrado = (texto, query) => {
   return texto.replace(regex, '<mark style="background: #ffd93d; padding: 1px 2px; border-radius: 3px;">$1</mark>');
 }
 
+/*
+  ===========================================================
+                  Logica Boton Carrito
+  ===========================================================
+*/
+
+
 const toggleCarrito = () => {
   listaCarrito.classList.toggle("open-cart-list")
 }
 
+const agregarProductoCarrito = (e) => {
+  const button = e.target.closest('.buy-button');
+  if (!button) {
+    return
+  }
+  const { id, name, price } = button.dataset;
+  console.log("🚀 ~ agregarProductoCarrito ~ button.dataset:", button.dataset)
+  const productoCarrito = carrito.find((producto) => producto.id == id)
+  if (productoCarrito) {
+    productoCarrito.cantidad++
+  } else {
+    carrito.push({ id, name, price, cantidad: 1 })
+  }
+  actualizarEstado();
+}
+
+const actualizarCantProductos = () => {
+  contadorProductosCarrito.textContent = carrito.reduce((acu, { cantidad }) => acu + cantidad, 0)
+}
+
+/*
+  ===========================================================
+                  Logica Lista Carrito
+  ===========================================================
+*/
+
+const renderizarProductosCarrito = () => {
+  if (!carrito.length) {
+    listaProductosCarrito.innerHTML = "<p>Ey! Todavia no agregaste nada a tu carrito 👀</p>"
+  } else {
+    listaProductosCarrito.innerHTML = carrito.map(renderizarProdCarrito).join("");
+  }
+}
+
+const renderizarProdCarrito = (producto) => {
+  const { id, name, price, cantidad } = producto;
+
+  return `
+    <div class="cart-list__card">
+      <div class="cart-list__container">
+        <div class="cart-list__header">
+          <h3>${name}</h3>
+          <p>$${price}</p>
+        </div>
+        <div class="cart-list__btns">
+          <button class="quantityHandlerDown" data-id="${id}">-</button>
+          <span class="quantityItem">${cantidad}</span>
+          <button class="quantityHandlerUp" data-id="${id}">+</button>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+const actualizarEstado = () => {
+  actualizarCarrito(carrito);
+  actualizarCantProductos();
+  renderizarProductosCarrito();
+}
+
+const ocultarCarritoScroll = () => {
+  if (listaCarrito.classList.contains("open-cart-list")) {
+    listaCarrito.classList.remove("open-cart-list")
+  }
+}
+
 const init = async () => {
-  const data = await obtenerDatos()
-  imprimirDatosAlumno()
-  renderizarProductos(data, "")
+  const data = await obtenerDatos();
+  imprimirDatosAlumno();
+  renderizarProductos(data, "");
+  actualizarCantProductos();
+  renderizarProductosCarrito();
   buscador.addEventListener("keyup", (e) => {
     let query = e.target.value;
     const resultadosFiltrados = filtrarResultados(data, query);
     renderizarProductos(resultadosFiltrados, query);
-  })
+  });
   botonCarrito.addEventListener("click", toggleCarrito);
+  resultadosContenedor.addEventListener("click", agregarProductoCarrito)
+  window.addEventListener("scroll", ocultarCarritoScroll);
 }
 
 init();
+
