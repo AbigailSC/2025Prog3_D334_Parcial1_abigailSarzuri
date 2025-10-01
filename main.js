@@ -20,6 +20,8 @@ const botonCarrito = document.querySelector(".cart__bubble");
 const listaCarrito = document.querySelector(".cart__container");
 const contadorProductosCarrito = document.querySelector(".cart__bubble__count")
 const listaProductosCarrito = document.querySelector(".cart__container__list");
+const montoTotalCarrito = document.querySelector(".cart-total-amount")
+const vaciarCarritoBtn = document.querySelector(".btn-delete")
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
@@ -127,8 +129,7 @@ const agregarProductoCarrito = (e) => {
     return
   }
   const { id, name, price } = button.dataset;
-  console.log("🚀 ~ agregarProductoCarrito ~ button.dataset:", button.dataset)
-  const productoCarrito = carrito.find((producto) => producto.id == id)
+  const productoCarrito = carrito.find((producto) => producto.id === id)
   if (productoCarrito) {
     productoCarrito.cantidad++
   } else {
@@ -166,19 +167,90 @@ const renderizarProdCarrito = (producto) => {
           <p>$${price}</p>
         </div>
         <div class="cart-list__btns">
-          <button class="quantityHandlerDown" data-id="${id}">-</button>
+          <button class="quantity-handler-down" data-id="${id}">-</button>
           <span class="quantityItem">${cantidad}</span>
-          <button class="quantityHandlerUp" data-id="${id}">+</button>
+          <button class="quantity-handler-sum" data-id="${id}">+</button>
         </div>
       </div>
     </div>
   `
 }
 
+const renderizarTotalCarrito = () => {
+  let totalCarrito = carrito.reduce((acc, { price, cantidad }) => acc + Number(price) * cantidad, 0);
+  return montoTotalCarrito.innerHTML = `$${totalCarrito.toFixed(2)}`
+}
+
+const vaciarCarrito = () => {
+  carrito = [];
+  actualizarEstado();
+}
+
+/*
+  ===========================================================
+                  Logica Btns Item Carrito
+  ===========================================================
+*/
+
+const encontrarProducto = (id) => {
+  return carrito.find(producto => producto.id == id);
+}
+
+const restaItemCarrito = (id) => {
+  const producto = encontrarProducto(id)
+  if (producto.cantidad === 1) {
+    carrito = carrito.filter(producto => producto.id !== id);
+    return;
+  } else {
+    restarCantidad(producto);
+  }
+  actualizarEstado();
+}
+
+const restarCantidad = (producto) => {
+  carrito = carrito.map((prodCarrito) => {
+    if (prodCarrito.id === producto.id) {
+      return { ...prodCarrito, cantidad: Number(prodCarrito.cantidad) - 1 }
+    } else {
+      return prodCarrito
+    }
+  })
+}
+
+const sumaItemCarrito = (id) => {
+  const producto = encontrarProducto(id)
+  sumarCantidad(producto);
+  actualizarEstado();
+}
+
+const sumarCantidad = (producto) => {
+  carrito = carrito.map((prodCarrito) => {
+    if (prodCarrito.id === producto.id) {
+      return { ...prodCarrito, cantidad: Number(prodCarrito.cantidad) + 1 }
+    } else {
+      return prodCarrito
+    }
+  })
+}
+
+const actualizarCantidad = (e) => {
+  if (!e.target.classList.contains("quantity-handler-down") && !e.target.classList.contains("quantity-handler-sum")) {
+    return
+  }
+  const { id } = e.target.dataset
+  if (e.target.classList.contains("quantity-handler-down")) {
+    restaItemCarrito(id)
+  } else {
+    sumaItemCarrito(id)
+  }
+  actualizarEstado()
+}
+
 const actualizarEstado = () => {
   actualizarCarrito(carrito);
   actualizarCantProductos();
   renderizarProductosCarrito();
+  renderizarTotalCarrito();
 }
 
 const ocultarCarritoScroll = () => {
@@ -187,12 +259,15 @@ const ocultarCarritoScroll = () => {
   }
 }
 
+/*
+  ===========================================================
+                Filtrado y Ordenamiento
+  ===========================================================
+*/
+
 const init = async () => {
   const data = await obtenerDatos();
-  imprimirDatosAlumno();
-  renderizarProductos(data, "");
-  actualizarCantProductos();
-  renderizarProductosCarrito();
+
   buscador.addEventListener("keyup", (e) => {
     let query = e.target.value;
     const resultadosFiltrados = filtrarResultados(data, query);
@@ -201,6 +276,13 @@ const init = async () => {
   botonCarrito.addEventListener("click", toggleCarrito);
   resultadosContenedor.addEventListener("click", agregarProductoCarrito)
   window.addEventListener("scroll", ocultarCarritoScroll);
+  vaciarCarritoBtn.addEventListener("click", vaciarCarrito);
+  listaProductosCarrito.addEventListener("click", actualizarCantidad)
+  imprimirDatosAlumno();
+  renderizarProductos(data, "");
+  actualizarCantProductos();
+  renderizarProductosCarrito();
+  renderizarTotalCarrito();
 }
 
 init();
